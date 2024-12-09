@@ -1,0 +1,4 @@
+*.o
+*.a
+*.out
+marukhin_lu.c
