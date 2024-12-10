@@ -50,4 +50,17 @@ double compute_error(double (*analytical)(int, double), gsl_vector* solution, si
 
     return sqrt(error);
 }
+
+
+double compute_inf_error(double (*analytical)(int, double), gsl_vector* solution, size_t n){
+    double error;
+    double h = (1.0 / (n - 1.0));
+    double max_err = 0;
+    for (int i = 0; i < n; i++){
+      if (abs(gsl_vector_get(solution, i) - analytical(i, h))) > max_err{
+            max_err = abs((gsl_vector_get(solution, i) - analytical(i, h)));
+         }
+    }
+    return max_err;
+}
 #endif //GEN_MATRIX_MUSTAKIMOVA_DATA_H
