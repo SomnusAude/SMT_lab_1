@@ -9,7 +9,7 @@ void applyDifferentialTask(size_t n, double ***matrix, double **rhs, double val_
     *matrix = (double **)malloc(n * sizeof(double *));
     for (int i = 0; i < n; i++)
     {
-        (*matrix)[i] = (double *)malloc(n * sizeof(double));
+        (*matrix)[i] = (double *)calloc(n, sizeof(double)); // Используем calloc для обнуления памяти
     }
 
     *rhs = (double *)malloc(n * sizeof(double));
@@ -18,22 +18,23 @@ void applyDifferentialTask(size_t n, double ***matrix, double **rhs, double val_
 
     for (int i = 0; i < n; i++)
     {
+        double x_i = i * h;
         if (i == 0)
         {
             (*matrix)[i][i] = 1.0;
-            (*rhs)[i] = (double)val_start;
+            (*rhs)[i] = val_start;
         }
         else if (i == n - 1)
         {
             (*matrix)[i][i] = 1.0;
-            (*rhs)[i] = (double)val_end;
+            (*rhs)[i] = val_end;
         }
         else
         {
-            (*matrix)[i][i + 1] = (6.0 - 14.0 * h);
-            (*matrix)[i][i] = (-12.0 + 16.0 * h);
-            (*matrix)[i][i - 1] = (6.0 - 2.0 * h);
-            (*rhs)[i] = -24.0 * i * h * h;
+            (*matrix)[i][i + 1] = (6.0 / h) + 14.0;
+            (*matrix)[i][i] = (-12.0 / h) + 16.0;
+            (*matrix)[i][i - 1] = (6.0 / h) - 2.0;
+            (*rhs)[i] = -24.0 * x_i * h;
         }
     }
 };
