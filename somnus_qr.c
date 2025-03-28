@@ -10,7 +10,7 @@ int main()
     // Количество точек
     size_t n = 80;
     // Постановка разностной задачи в матрицу
-    applyDifferentialTask(n, &matrix, &vector, 2, 4);
+    applyDifferentialTask(n, &matrix, &vector, 0, 2);
 
     printf("Matrix:\n");
     for (int i = 0; i < n; i++)

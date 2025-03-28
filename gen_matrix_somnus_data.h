@@ -30,20 +30,17 @@ void applyDifferentialTask(size_t n, double ***matrix, double **rhs, double val_
         }
         else
         {
-            (*matrix)[i][i + 1] = (1.0 / (h * h)) - (7.0 / h);
-            (*matrix)[i][i] = (-2.0 / (h * h)) + (10.0 / h) + 3.0;
-            (*matrix)[i][i - 1] = (1.0 / (h * h)) - (3.0 / h);
-            // printf("i = %f\n", h*h*(2.0*i*h - 2.0));
-            (*rhs)[i] = (2 * i * h - 2);
+            (*matrix)[i][i + 1] = (6.0 / h) + 14.0;
+            (*matrix)[i][i] = (-12.0 / h) + 16.0;
+            (*matrix)[i][i - 1] = (6.0 / h) - 2.0;
+            (*rhs)[i] = -24.0 * x_i * h;
         }
     }
 };
 
 double computeAnalyticExpression(int i, double h)
 {
-    double x = i * h;
-    double result = (2 * (-14 * exp(x) + 14 * exp(3 * x) + 8 * exp(3 + x) - 8 * exp(1 + 3 * x) - exp(1) * (1 + 3 * x) + exp(3) * (1 + 3 * x))) / (9 * exp(1) * (-1 + exp(2)));
-    return result;
+    return 2.0 * i * h;
 };
 
 double compute_error(double (*analytical)(int, double), gsl_vector *solution, size_t n)
