@@ -43,29 +43,32 @@ double computeAnalyticExpression(int i, double h)
     return 2.0 * i * h;
 };
 
-double compute_error(double (*analytical)(int, double), gsl_vector *solution, size_t n)
+double compute_error(double (*analytical)(int, double), double *solution, size_t n)
 {
-    double error;
+    double error = 0.0;
     double h = (1.0 / (n - 1.0));
 
     for (int i = 0; i < n; i++)
     {
         printf("analytic[%d] = %f\n", i, analytical(i, h));
-        error = error + (gsl_vector_get(solution, i) - analytical(i, h)) * (gsl_vector_get(solution, i) - analytical(i, h));
+        double diff = solution[i] - analytical(i, h);
+        error += diff * diff;
     }
 
     return sqrt(error);
 }
 
-double compute_inf_error(double (*analytical)(int, double), gsl_vector *solution, size_t n)
+double compute_inf_error(double (*analytical)(int, double), double *solution, size_t n)
 {
     double h = (1.0 / (n - 1.0));
     double max_err = 0.0;
+
     for (int i = 0; i < n; i++)
     {
-        if (sqrt((gsl_vector_get(solution, i) - analytical(i, h)) * (gsl_vector_get(solution, i) - analytical(i, h))) > max_err)
+        double diff = fabs(solution[i] - analytical(i, h));
+        if (diff > max_err)
         {
-            max_err = sqrt((gsl_vector_get(solution, i) - analytical(i, h)) * (gsl_vector_get(solution, i) - analytical(i, h)));
+            max_err = diff;
         }
     }
     return max_err;
