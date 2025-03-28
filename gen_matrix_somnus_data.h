@@ -30,10 +30,10 @@ void applyDifferentialTask(size_t n, double ***matrix, double **rhs, double val_
         }
         else
         {
-            (*matrix)[i][i + 1] = (6.0 / h) + 14.0;
-            (*matrix)[i][i] = (-12.0 / h) + 16.0;
-            (*matrix)[i][i - 1] = (6.0 / h) - 2.0;
-            (*rhs)[i] = -24.0 * i * h;
+            (*matrix)[i][i + 1] = (6.0 - 14.0 * h);
+            (*matrix)[i][i] = (-12.0 + 16.0 * h);
+            (*matrix)[i][i - 1] = (6.0 - 2.0 * h);
+            (*rhs)[i] = -24.0 * i * h * h;
         }
     }
 };
