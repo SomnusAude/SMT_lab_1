@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -g
 
-LIBS = -lgsl -lgslcblas -lm -lsomnus_lab
+LIBS = -lgsl -lgslcblas -lm -lsomnus_lab -llapacke -llapack -lblas
 
 
 LIB_NAME = somnus_lab
