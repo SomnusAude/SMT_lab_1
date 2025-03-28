@@ -8,7 +8,7 @@ int main()
 {
     double **matrix;
     double *vector;
-    size_t n = 160;
+    size_t n = 80;
 
     applyDifferentialTask(n, &matrix, &vector, 0, 2);
 
@@ -39,6 +39,17 @@ int main()
 
     int info;
     double *tau = malloc(n * sizeof(double));
+
+    double rcond;
+    int inforcond = LAPACKE_dgecon(LAPACK_ROW_MAJOR, '1', n, flat_matr, n, &rcond);
+    if (inforcond != 0)
+    {
+        printf("Failed to compute condition number\n");
+    }
+    else
+    {
+        printf("Condition number = %e\n", 1.0 / rcond);
+    }
 
     info = LAPACKE_dgeqrf(LAPACK_ROW_MAJOR, n, n, flat_matr, n, tau);
     if (info != 0)
