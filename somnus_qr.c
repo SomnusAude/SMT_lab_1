@@ -8,7 +8,7 @@ int main()
 {
     double **matrix;
     double *vector;
-    size_t n = 80;
+    size_t n = 160;
 
     applyDifferentialTask(n, &matrix, &vector, 0, 2);
 
